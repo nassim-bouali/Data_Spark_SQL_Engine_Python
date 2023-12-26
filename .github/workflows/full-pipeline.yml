@@ -3,7 +3,7 @@ name: Build, Push and Deploy Docker Image to Minikube
 on:
   push:
     branches:
-      - master  # Project's main branch
+      - NB/Fix_release  # Project's main branch
 
 jobs:
   build:
@@ -42,6 +42,13 @@ jobs:
 
           # Start Minikube
           minikube start
+        env:
+          KUBECONFIG: ${{ runner.workspace }}/kubeconfig.yaml
+
+      - name: Debugging
+        run: |
+          ls -al ./resources
+          cat ./deploy/batch-sql-processing-engine-deployment.yaml
         env:
           KUBECONFIG: ${{ runner.workspace }}/kubeconfig.yaml
 
