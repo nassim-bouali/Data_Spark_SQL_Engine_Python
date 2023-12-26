@@ -3,7 +3,7 @@
     {
       "id": "user",
       "json_type": "CsvStorage",
-      "path": "/app/resources/data/input/input_data1.csv",
+      "path": "/resources/data/input/input_data1.csv",
       "options": {
         "header": "true",
         "delimiter": ";"
