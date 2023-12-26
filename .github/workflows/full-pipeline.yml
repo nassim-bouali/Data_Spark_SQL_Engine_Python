@@ -45,13 +45,6 @@ jobs:
         env:
           KUBECONFIG: ${{ runner.workspace }}/kubeconfig.yaml
 
-      - name: Debugging
-        run: |
-          ls -al ./resources
-          cat ./deploy/batch-sql-processing-engine-deployment.yaml
-        env:
-          KUBECONFIG: ${{ runner.workspace }}/kubeconfig.yaml
-
       - name: Deploy to Minikube
         run: |
           kubectl apply -f ./deploy/batch-sql-processing-engine-deployment.yaml
