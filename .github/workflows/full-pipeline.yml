@@ -17,7 +17,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t spark-sql-batch-processing-python -f Build/local/dockerfile .
+        run: docker build -t spark-sql-batch-processing-python .
 
       - name: Tag Docker Image
         run: docker tag spark-sql-batch-processing-python:latest ${{ secrets.DOCKER_USERNAME }}/spark-sql-batch-processing-python:latest
