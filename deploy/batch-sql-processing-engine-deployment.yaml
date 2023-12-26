@@ -1,0 +1,53 @@
+# minikube mount "path/to/project/resources":/resources
+# kubectl apply -f path/to/project/deploy/local/batch-sql-processing-engine-deployment.yaml
+# kubectl logs -f POD_ID
+
+# ConfigMap for spark run
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spark-run
+data:
+  spark-run.sh: |-
+    #!/bin/sh
+    spark-submit \
+    --jars /resources/lib/postgresql-42.7.1.jar \
+    /app/application.py \
+    --inline \
+    --plan "/resources/configuration-deployment-csv-to-jdbc.json"
+
+---
+# Deployment for Spark application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch-sql-processing-engine-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: batch-sql-processing-engine
+  template:
+    metadata:
+      labels:
+        app: batch-sql-processing-engine
+    spec:
+      containers:
+        - name: batch-sql-processing-engine-deployment
+          image: nassimb7/spark-sql-batch-processing-python:latest
+          command: ["/bin/sh", "/run/spark-run.sh"]
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "0.2"
+            limits:
+              memory: "500Mi"
+              cpu: "0.5"
+          volumeMounts:
+            - name: spark-run
+              mountPath: /run/spark-run.sh
+              subPath: spark-run.sh
+      volumes:
+        - name: spark-run
+          configMap:
+            name: spark-run
