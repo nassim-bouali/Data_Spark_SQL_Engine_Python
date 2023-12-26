@@ -3,7 +3,7 @@ name: Build, Push and Deploy Docker Image to Minikube
 on:
   push:
     branches:
-      - NB/Fix_release  # Project's main branch
+      - master  # Project's main branch
 
 jobs:
   build:
