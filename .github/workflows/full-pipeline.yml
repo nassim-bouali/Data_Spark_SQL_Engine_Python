@@ -57,7 +57,7 @@ jobs:
           kubectl apply -f ./deploy/batch-sql-processing-engine-deployment.yaml
           kubectl wait --timeout=5m --for=condition=available deployment/batch-sql-processing-engine-deployment
           POD_NAME=$(kubectl get pods --selector=app=batch-sql-processing-engine -o jsonpath="{.items[0].metadata.name}")
-          kubectl exec $POD_NAME -- ls -al /resources
+          kubectl exec $POD_NAME -- mkdir -p /resources
           kubectl cp "./resources" $POD_NAME:/resources
         env:
           KUBECONFIG: ${{ runner.workspace }}/kubeconfig.yaml
