@@ -1,0 +1,26 @@
+name: Build, Push and Deploy Docker Image to Minikube
+
+on:
+  push:
+    branches:
+      - master  # Project's main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub # Selected container registry
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t spark-sql-batch-processing-python -f Build/local/dockerfile .
+
+      - name: Tag Docker Image
+        run: docker tag spark-sql-batch-processing-python:latest ${{ secrets.DOCKER_USERNAME }}/spark-sql-batch-processing-python:latest
+
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/spark-sql-batch-processing-python:latest

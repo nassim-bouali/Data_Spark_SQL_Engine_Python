@@ -1,0 +1,32 @@
+{
+  "inputs": [
+    {
+      "id": "user",
+      "json_type": "CsvStorage",
+      "path": "resources/data/input/input_data1.csv",
+      "options": {
+        "header": "true",
+        "delimiter": ";"
+      }
+    }
+  ],
+  "transformations": [
+    {
+      "id": "allUsers",
+      "sql": "select * from user"
+    }
+  ],
+  "targets": [
+    {
+      "from_sql_query": "allUsers",
+      "output": {
+        "json_type": "CsvStorage",
+        "path": "resources/data/output",
+        "options": {
+          "header": "true",
+          "delimiter": ";"
+        }
+      }
+    }
+  ]
+}
