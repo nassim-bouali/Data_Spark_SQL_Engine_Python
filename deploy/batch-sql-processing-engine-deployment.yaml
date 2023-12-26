@@ -11,10 +11,10 @@ data:
   spark-run.sh: |-
     #!/bin/sh
     spark-submit \
-    --jars /resources/lib/postgresql-42.7.1.jar \
+    --jars /app/resources/lib/postgresql-42.7.1.jar \
     /app/application.py \
     --inline \
-    --plan "/resources/configuration-deployment-csv-to-jdbc.json"
+    --plan "/app/resources/configuration-deployment-csv-to-jdbc.json"
 
 ---
 # Deployment for Spark application
